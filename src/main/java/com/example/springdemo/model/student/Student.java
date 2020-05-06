@@ -1,4 +1,4 @@
-package com.example.springdemo.student;
+package com.example.springdemo.model.student;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Student")
@@ -18,6 +19,7 @@ public class Student implements Serializable {
     @Column(name = "Id", nullable = false)
     private Integer id;
 
+    @NotBlank
     @Column(name = "Name", nullable = false)
     private String name;
 

@@ -1,6 +1,6 @@
 package com.example.springdemo.controllers;
 
-import com.example.springdemo.student.*;
+import com.example.springdemo.model.student.*;
 import com.example.springdemo.util.PageableWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,9 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8081")
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -32,9 +36,9 @@ public class StudentController {
 
 
     @GetMapping("/students/{id}")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity getStudentById(@PathVariable Integer id) {
         Student studentFound = studentService.findOne(id);
-
         if (studentFound != null) {
             return new ResponseEntity(studentFound, HttpStatus.OK);
         }
@@ -58,7 +62,7 @@ public class StudentController {
 
             return new ResponseEntity(studentFound, HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("Failed to update student!", HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/students/{id}")
@@ -68,6 +72,6 @@ public class StudentController {
             studentService.delete(id);
             return new ResponseEntity(studentFound, HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("Failed to remove student!", HttpStatus.BAD_REQUEST);
     }
 }

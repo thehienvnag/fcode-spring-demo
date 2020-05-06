@@ -1,10 +1,9 @@
-package com.example.springdemo.student;
+package com.example.springdemo.model.student;
 
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface StudentService {
     public Page<Student> findAll(Pageable pageable);

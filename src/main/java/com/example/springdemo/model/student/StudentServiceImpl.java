@@ -1,11 +1,9 @@
-package com.example.springdemo.student;
+package com.example.springdemo.model.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -27,7 +25,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student findOne(Integer id) {
         return studentRepository.findById(id)
-                                .orElse(null);
+                .orElse(null);
     }
     @Override
     public void save(Student student) {
