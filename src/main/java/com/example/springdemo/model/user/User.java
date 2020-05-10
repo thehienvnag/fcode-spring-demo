@@ -2,6 +2,7 @@ package com.example.springdemo.model.user;
 
 import com.example.springdemo.model.role.Role;
 import com.example.springdemo.model.userrole.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -30,6 +31,14 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UserRole> userRoles;
 
+    public User() {
+    }
+
+    public User(String username, String password, String name) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
 
     public List<UserRole> getUserRoles() {
         return userRoles;
@@ -55,6 +64,7 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

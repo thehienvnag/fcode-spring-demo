@@ -2,6 +2,7 @@ package com.example.springdemo.model.userrole;
 
 import com.example.springdemo.model.role.Role;
 import com.example.springdemo.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,6 +33,7 @@ public class UserRole implements Serializable {
         this.role = role;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }

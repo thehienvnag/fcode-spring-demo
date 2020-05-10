@@ -36,8 +36,6 @@ public class JwtTokenProvider {
         Date expiredDate = new Date(now.getTime() + jwtExpirationInMs);
 
 
-        logger.info(key.toString());
-
         String token = Jwts.builder()
                     .setSubject(userPrincipal.getId().toString())
                     .setIssuedAt(now)
@@ -49,7 +47,6 @@ public class JwtTokenProvider {
     }
 
     public Integer getUserIdFromJWT(String token){
-        logger.info(key.toString());
 
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -61,8 +58,6 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token){
         try {
-            logger.info(key.toString());
-            logger.info("validate token: " + token);
             Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
