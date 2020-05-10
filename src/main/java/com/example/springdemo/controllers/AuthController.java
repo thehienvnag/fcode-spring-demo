@@ -4,6 +4,8 @@ import com.example.springdemo.model.requests.LoginRequest;
 import com.example.springdemo.model.responses.JwtAuthenticationResponse;
 import com.example.springdemo.model.user.UserRepository;
 import com.example.springdemo.security.JwtTokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,10 +46,13 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = tokenProvider.generateToken(authentication);
+        logger.info("Get token: " + token);
         return new ResponseEntity(
-                new JwtAuthenticationResponse(tokenProvider.generateToken(authentication)),
+                new JwtAuthenticationResponse(token),
                 HttpStatus.OK
         );
+
     }
 
 }

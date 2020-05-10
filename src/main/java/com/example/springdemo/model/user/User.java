@@ -2,6 +2,7 @@ package com.example.springdemo.model.user;
 
 import com.example.springdemo.model.role.Role;
 import com.example.springdemo.model.userrole.UserRole;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,8 +27,9 @@ public class User implements Serializable {
     @Column(name = "Name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UserRole> userRoles;
+
 
     public List<UserRole> getUserRoles() {
         return userRoles;

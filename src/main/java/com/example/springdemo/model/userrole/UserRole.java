@@ -16,11 +16,11 @@ public class UserRole implements Serializable {
     @Column(name = "Id", insertable = false, nullable = false)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", referencedColumnName = "Id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "roleid", referencedColumnName = "Id")
     private Role role;
 

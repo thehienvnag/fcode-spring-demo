@@ -8,6 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,13 +20,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Security;
 
+@Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtTokenProvider tokenProvider = new JwtTokenProvider();
+    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private UserServiceImpl userService = new UserServiceImpl();
+    private UserServiceImpl userService;
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
@@ -43,8 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                 );
-                authentication.setDetails(new WebAuthenticationDetailsSource()
-                        .buildDetails(httpServletRequest)
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource()
+                                .buildDetails(httpServletRequest)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

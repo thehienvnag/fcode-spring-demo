@@ -18,7 +18,7 @@ public class Role implements Serializable {
     @Column(name = "Name", nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "role")
+    @OneToOne(mappedBy = "role", fetch = FetchType.LAZY)
     private UserRole userRole;
 
     public Integer getId() {
